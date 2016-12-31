@@ -4,6 +4,10 @@
 /* set output quality */
 $fn = 50;
 
+/* cherry cases have a differently-shaped switch hole (with notches);
+ default to Alps style (rectangular). */
+use_cherry = false;
+
 /* Distance between key centers. */
 column_spacing   = 19;
 row_spacing      = column_spacing;
@@ -38,10 +42,6 @@ hand_separation        = 0;
    leave. See spacer(). */
 switch_hole_size = 14;
 
-/* Sets whether the case should use notched holes. As far as I can
-   tell these notches are not all that useful... */
-use_notched_holes = true;
-
 /* Number of rows and columns in the matrix. You need to update
    staggering_offsets if you change n_cols. */
 n_rows = 4;
@@ -51,7 +51,7 @@ n_cols = 5;
 n_thumb_keys = 1;
 
 /* The width of the USB cable hole in the spacer. */
-cable_hole_width = 12;
+cable_hole_width = 14;
 
 /* Vertical column staggering offsets. The first element should
    be zero. */
@@ -68,8 +68,7 @@ module rz(angle, center=undef) {
   translate(center) {
     rotate(angle) {
       translate(-center) {
-        for (i=[0:$children-1])
-          child(i);
+        children();
       }
     }
   }
@@ -81,23 +80,35 @@ module rz(angle, center=undef) {
 function rz_fun(p, angle, center) = [cos(angle) * (p[0] - center[0]) - sin(angle) * (p[1] - center[1]) + center[0],
                                      sin(angle) * (p[0] - center[0]) + cos(angle) * (p[1] - center[1])+ center[1]];
 
-module switch_hole(position, notches=use_notched_holes) {
+module switch_hole(position, notches=use_cherry, is_thumb=false) {
   /* Cherry MX switch hole with the center at `position`. Sizes come
      from the ErgoDox design. */
-  hole_size    = 13.97;
-  notch_width  = 3.5001;
+  cherry_hole_size = 13.97;
+  notch_width = 3.5001;
   notch_offset = 4.2545;
-  notch_depth  = 0.8128;
-  translate(position) {
-    union() {
-      square([hole_size, hole_size], center=true);
-      if (notches == true) {
-        translate([0, notch_offset]) {
-          square([hole_size+2*notch_depth, notch_width], center=true);
+  notch_depth = 0.8128;
+  alps_hole_width = 15.882;
+  alps_hole_height = 13.083;
+  if (use_cherry == true) {
+    translate(position) {
+      union() {
+        square([cherry_hole_size, cherry_hole_size], center=true);
+        if (notches == true) {
+          translate([0, notch_offset]) {
+            square([cherry_hole_size+2*notch_depth, notch_width], center=true);
+          }
+          translate([0, -notch_offset]) {
+            square([cherry_hole_size+2*notch_depth, notch_width], center=true);
+          }
         }
-        translate([0, -notch_offset]) {
-          square([hole_size+2*notch_depth, notch_width], center=true);
-        }
+      }
+    }
+  } else {
+    translate(position) {
+      if (is_thumb == true) {
+        square([alps_hole_height, alps_hole_width], center=true);
+      } else {
+        square([alps_hole_width, alps_hole_height], center=true);
       }
     }
   }
@@ -139,20 +150,16 @@ module rotate_half() {
      the thumb key. Assumes that the thumb key is a 1x1.5 key and that
      it is shifted 0.5*column_spacing up relative to the nearest column. */
   rotation_y_offset = 1.75 * column_spacing;
-  for (i=[0:$children-1]) {
-    rz(angle, [hand_separation, rotation_y_offset]) {
-      child(i);
-    }
+  rz(angle, [hand_separation, rotation_y_offset]) {
+    children();
   }
 }
 
 module add_hand_separation() {
   /* Shift everything right to get desired hand separation. */
-  for (i=[0:$children-1]) {
-    translate([0.5*hand_separation, /* we get back the full separation
-                                       because of mirroring */
-               0]) child(i);
-  }
+  translate([0.5*hand_separation, /* we get back the full separation
+                                     because of mirroring */
+             0]) children();
 }
 
 module right_half (switch_holes=true, key_size=key_hole_size) {
@@ -166,7 +173,7 @@ module right_half (switch_holes=true, key_size=key_hole_size) {
     add_hand_separation() {
       for (j=[0:(n_thumb_keys-1)]) {
         if (switch_holes == true) {
-          switch_hole([x_offset + j*row_spacing, thumb_key_offset]);
+          switch_hole([x_offset + j*row_spacing, thumb_key_offset], use_cherry, true);
         } else {
           thumb_key([x_offset + j*row_spacing, thumb_key_offset], key_size);
         }
@@ -198,7 +205,7 @@ module screw_hole(radius, offset_radius, position, direction) {
   }
 }
 
-module right_screw_holes(hole_radius) {
+module right_screw_holes(hole_radius, split_bottom) {
   /* coordinates of the back right screw hole before rotation... */
   back_right = [(n_cols+n_thumb_keys)*row_spacing,
                staggering_offsets[n_cols-1] + n_rows * column_spacing];
@@ -209,12 +216,23 @@ module right_screw_holes(hole_radius) {
 
   rotate_half() {
     add_hand_separation() {
+      // When adding washers, split the bottom middle hole, but when doing screws
+      // there should just be one bottom middle hole.
+      if (split_bottom) {
+        screw_hole(hole_radius, washer_radius,
+                   [row_spacing+2.2, -0.5],
+                   [-nudge, -nudge]);
+      } else {
+        screw_hole(hole_radius, washer_radius,
+                   [-2.25, 3.75],
+                   [-nudge, -nudge]);
+      }
+      // bottom edge
       screw_hole(hole_radius, washer_radius,
-                 [row_spacing, 0],
-                 [-nudge, -nudge]);
-      screw_hole(hole_radius, washer_radius,
-                 [(n_cols+n_thumb_keys)*row_spacing, staggering_offsets[n_cols-1]],
+                 [(n_cols+n_thumb_keys)*row_spacing,
+                  staggering_offsets[n_cols-1]-2],
                  [nudge, -nudge]);
+      // top edge
       screw_hole(hole_radius, washer_radius,
                  back_right,
                  [nudge, nudge]);
@@ -235,10 +253,10 @@ module right_screw_holes(hole_radius) {
   }
 }
 
-module screw_holes(hole_radius) {
+module screw_holes(hole_radius, split_bottom) {
   /* Create all the screw holes. */
-  right_screw_holes(hole_radius);
-  mirror ([1,0,0]) { right_screw_holes(hole_radius); }
+  right_screw_holes(hole_radius, split_bottom);
+  mirror ([1,0,0]) { right_screw_holes(hole_radius, split_bottom); }
 }
 
 module left_half(switch_holes=true, key_size=key_hole_size) {
@@ -248,8 +266,8 @@ module left_half(switch_holes=true, key_size=key_hole_size) {
 module bottom_plate() {
   /* bottom layer of the case */
   difference() {
-    hull() { screw_holes(washer_radius); }
-    screw_holes(screw_hole_radius);
+    hull() { screw_holes(washer_radius, true); }
+    screw_holes(screw_hole_radius, false);
   }
 }
 
@@ -259,6 +277,8 @@ module top_plate() {
     bottom_plate();
     right_half(false);
     left_half(false);
+    // TODO: only one shape from logo.dxf is visible!
+    translate([-15, 85]) { import("logo.dxf"); }
   }
 }
 
@@ -302,8 +322,7 @@ module spacer_quadrant(spacer_quadrant_number) {
   }
 }
 
-module quartered_spacer()
-{
+module quartered_spacer() {
   /* Assemble all four quarters of a spacer. */
   spacer_quadrant(0);
   spacer_quadrant(1);
@@ -312,14 +331,25 @@ module quartered_spacer()
 }
 
 /* Create all four layers. */
-top_plate();
-translate([300, 0]) { switch_plate(); }
-translate([0, 150]) { bottom_plate(); }
-translate([300, 150]) {
-  if (quarter_spacer == true) {
-    quartered_spacer();
-  }
-  else {
-    spacer();
+module layers_spread() {
+  top_plate();
+  translate([300, 0]) { switch_plate(); }
+  translate([0, 150]) { bottom_plate(); }
+  translate([300, 150]) {
+    if (quarter_spacer == true) {
+      quartered_spacer();
+    }
+    else {
+      spacer();
+    }
   }
 }
+
+module layers_stacked() {
+  top_plate();
+  translate([0, 0, -3]) { switch_plate(); }
+  translate([0, 0, -6]) { spacer(); }
+  translate([0, 0, -12]) { bottom_plate(); }
+}
+
+layers_spread();
