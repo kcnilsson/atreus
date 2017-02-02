@@ -180,7 +180,7 @@ Alps-mount keycaps:
 
 - 50 Matias or Cherry switches from mechanicalkeyboards.com
 - 50 diodes from radio shack, ebay, or whatever
-- 40 1x, 2 1.5x Keycaps from signatureplastics.com OR full keycap set from matias.com
+- 40 1x, 2 1.5x Keycaps from signatureplastics.com OR full keycap set from matias.ca
 - A-star micro from pololu.com
 - Case materials from various sources
 - Case laser cutting: 7.5 minutes on a 100W Epilog laser; varies by source
