@@ -102,7 +102,7 @@ to the different sizes and orientations of certain keys (backspace,
 shift, enter, etc) many of the labels will be incorrect if present.
 
 Cherry switches have more options. This
-[[http://keyshop.pimpmykeyboard.com/products/full-keysets/dsa-blank-sets-1][DSA-shaped base set]] (spherical indentations on the key, same profile for each
+[[http://pimpmykeyboard.com/dsa-pbt-abs-blank-keycap-sets/][DSA-shaped base set]] (spherical indentations on the key, same profile for each
 row) from Signature Plastics has 52 1x keys plus a few extras we won't
 use. There are two "deep dish" keys in that set which you can place
 under your index fingers on the home row to help guide your hands to
