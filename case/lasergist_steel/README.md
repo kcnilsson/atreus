@@ -2,7 +2,8 @@ Stainless Steel plates using Lasergist
 ======================================
 
 Photos: http://imgur.com/gallery/ZaZHV
-!(Stainless Steel Atreus)[http://i.imgur.com/AaAlOPg.jpg]
+
+![Stainless Steel Atreus](http://i.imgur.com/AaAlOPg.jpg)
 
 The illustrator files are ready to be submitted as-is to Lasergist to make stainless steel plates (Cherry MX version)
 
