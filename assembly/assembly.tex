@@ -1,94 +1,92 @@
-\documentclass{article}
+\documentclass[landscape,twocolumn]{article}
 \title{Atreus Keyboard Assembly}
 \date{ }
+\usepackage{pdflscape}
 \usepackage{graphicx}
-\usepackage{geometry}
+\usepackage[landscape,twocolumn]{geometry}
 \usepackage{wrapfig}
-\newgeometry{margin=3cm}
+\newgeometry{margin=1.6cm}
 \begin{document}
 \setlength{\parindent}{0cm}
 \maketitle
 \section{Prerequisites}
 
-In order to assemble your keyboard, you'll need your kit plus a few
-other tools. The kit should contain these parts and a few spares:
+Before starting make sure your kit has all its parts:
 
 \begin{itemize}
-\item Case (top plate, switch plate, spacer, bottom plate)
-\item Diodes (42)
-\item Key switches (42 tactile or clicky, 5 red)
-\item A-Star Micro controller
+\item Case: top plate, switch plate, spacer\footnote{Your spacer may
+  be one contiguous piece or split into 3 pieces.}, bottom plate
+\item Sandpaper: 100-220 grit and 1000-2000 grit waterproof
+\item Key switches: 42 tactile or clicky, 5 red optional
 \item Printed circuit board (PCB)
-\item Machine screws and nuts (8 each, 16mm M3 size)
-\item Key caps (40 normal, 2 long)
+\item A-Star Micro controller\footnote{The controller and diodes will be
+  attached to the PCB already in presoldered boards.}
+\item Diodes\textsuperscript{2}: 42
 \item USB micro cable
+\item Key caps: 40 normal, 2 long
+\item Screws and nuts: 8 each, 16mm M3 size
 \item Rubber feet
 \end{itemize}
 
 You'll also need to have these on hand:
 
 \begin{itemize}
-\item Sandpaper (200 grit and 1000 grit waterproof)
-\item Can of spray lacquer (clear glossy recommended)
+\item Can of spray lacquer or polyurethane (clear glossy recommended)
 \item Newspaper or other material to spray on
-\item Soldering iron and solder (thin solder and an iron with a sharp
-  tip recommended)
-\item Wire cutters
+\item Soldering iron and solder (lead-free not recommended)
+\item Wire cutters (not needed for presoldered kits)
 \end{itemize}
 
 \vspace{1em}
 
 The latest version of this document can always be found
-online.\footnote{http://atreus.technomancy.us/assembly.pdf} If you're
-reading a black-and-white printed copy, you may find some of the
-photos clearer in color onscreen. This copy describes the
-circuit-board-based kit. If you are hand-wiring a board, see the older
-assembly
+online.\footnote{http://atreus.technomancy.us/assembly.pdf} If you are
+hand-wiring a board without a PCB, see the older assembly
 guide.\footnote{http://atreus.technomancy.us/assembly-hand-wired.pdf}
 The photos in this guide depict Matias switches, (with rectangular
 switch stems) but you can use Cherry MX switches (with stems shaped
-like a +) as well. The assembly steps are mostly the same in either case.
+like a +) as well.
 
 \section{Sanding}
 
-Start by sanding down both sides of each piece with your lowest-grit
-sandpaper. You may want to hold two pieces together while sanding for
-strength or placing it on a flat surface you don't mind scruffing up;
-too much pressure on a single plate could damage it.
+Start by sanding with your rougher sandpaper. The top side of the
+top plate and the bottom side of the bottom plate are the only
+surfaces that are exposed to the touch once the keyboard is fully
+assembled, so these will need the most attention when sanding. You can
+sand the other surfaces as well just to get the scorch marks off, but
+you don't need to worry about how smooth the inner surfaces feel to
+the touch.
 
 \vspace{1em}
-\noindent\makebox[\textwidth]{%
-\includegraphics[width=0.7\linewidth]{sanding.jpg}}
+\begin{center}
+  \includegraphics[width=0.7\columnwidth]{sanding.jpg}
+\end{center}
 \vspace{1em}
 
-Keep in mind that the top side of the top plate and the bottom side of
-the bottom plate are the only surfaces that are exposed to the touch
-once the keyboard is fully assembled, so these will need the most
-attention when sanding. You can sand the other surfaces as well just
-to get the scorch marks off, but you don't need to worry about how
-smooth the inner surfaces feel to the touch. Be sure to get all the
+You may want to hold two pieces together while sanding for strength or
+placing it on a flat surface you don't mind scruffing up; too much
+pressure on a single plate could damage it. Be sure to get all the
 wood dust off the pieces before you go on. A clean tack cloth or other
 fine cloth works well.
 
 \vspace{1em}
 
-Some people don't like the look of the exposed edges charred from the
-laser cutter. You can choose to sand off the charring, or alternately
-cover it all with black ink from a sharpie marker for a more
-consistent look, or leave it alone.
+Some people don't like the look of the exposed edges charred black
+from the laser cutter. You can choose to sand off the charring, or
+alternately cover it all with black ink from a sharpie marker for a
+more consistent look, or leave it alone.
 
 \section{Finishing}
 
 Once the case is sanded down all over with coarse sandpaper, find a
-good place to spray the lacquer. It should be outdoors or in a
-well-ventilated garage if spraying outdoors is not feasible. Lay down
-the newspaper with the pieces of the case on top of it. Spray your
-first coat of lacquer to the face-up side of each piece. Try to use a
-steady hand and keep the path of the spray overlapping itself just a
-small amount as you go to and fro to minimize runs but still cover all
-the area. The evenness of the spray matters less on the internal
-surfaces of the case, so it's a good time to practice and get the hang
-of it.
+good place to spray the lacquer or polyurethane. It should be outdoors
+or in a well-ventilated garage. Lay down the newspaper with the pieces
+of the case on top of it. Spray your first coat of lacquer to the
+face-up side of each piece. Try to use a steady hand and keep the path
+of the spray overlapping itself just a small amount as you go to and
+fro to minimize runs but still cover all the area. The evenness of the
+spray matters less on the internal surfaces of the case, so that's a
+good place to practice and get the hang of it.
 
 \vspace{1em}
 
@@ -99,52 +97,53 @@ side. Repeat for a second coat. After the second coat, you can ignore
 all surfaces except for the top of the top plate and the bottom of the
 bottom plate since only these are exposed to the outside. At this
 point you can take in the switch plate and continue the rest of the
-keyboard construction while you wait for remaining coats to dry.
+keyboard construction in between applying the other coats.
 
 \vspace{1em}
 
 The outer surfaces should have between eight to ten coats applied
 total. As you get to the later coats, the end result will be smoother
 if you can keep them thinner. After your second-to-last coat dries,
-take your fine sandpaper and soak it in water, then sand over the top and
-bottom surfaces lightly. Add a final coat and buff it with a fine
+take your fine sandpaper and soak it in water, then sand over the top
+and bottom surfaces lightly. Add a final coat and buff it with a fine
 cloth. If you make any mistakes or are unhappy with the smoothness of
 the finish, let it dry and add another layer of lacquer, then try
-lightly sanding it again. If you have some wood finishing oil, you can
-apply it with your fingers.
+lightly sanding it again until you're satisfied. If you have some wood
+finishing oil, you can apply it with your fingers.
 
 \section{Diodes}
+
+If you've got a presoldered board, you can skip ahead to the
+``Switches'' section.
+
+\vspace {1em}
 
 If you've never soldered before, there are plenty of good
 introductions online.\footnote{This one from Adafruit is great:
   https://learn.adafruit.com/adafruit-guide-excellent-soldering/tools}
 Coat the tip of the hot iron thinly with some solder before you
-start. The key is to use the iron to heat both parts of the joint for
-a second or two, then bring in a dab of the solder and let it melt and
-stick to the lead and the circuit board pad.
+start. The key is to use the iron to heat both the hole and the lead
+sticking through it for a second or two, then bring in a dab of the
+solder. The solder should melt immediately if the joint is hot enough.
 
 \vspace{1em}
 
 Take five diodes at a time and bend them into a U shape. Place them
 into the diode holes next to each switch slot on the unlabeled side of
 the board. Each diode has a black band on it; the band should be
-pointing in the direction of the arrow on the printed side of the
-board. Once all five are in, pinch the legs of the diodes together to
-keep them from falling out, then flip the board over and solder them
-in place. Make sure they don't protrude up more than necessary.
+pointing in the direction of the arrow on the printed side of
+the board. Once all five are in, pinch the legs of the diodes together
+to keep them from falling out, then flip the board over and solder
+them in place. Make sure they don't protrude up more than necessary.
 
 \vspace{1em}
-\noindent\makebox[\textwidth]{%
-  \includegraphics[width=0.65\linewidth]{diodes.jpg}}
+\includegraphics[width=\columnwidth]{diodes.jpg}
 \vspace{1em}
 
-In the photo the diodes are inserted from the back of the circuit
-board, but it will work just as well to insert them from the front as
-long as the black band is oriented correctly. Once they're soldered,
-trim the diode legs with wire cutters. Grip the diode leg as you
-trim it to keep it from flying across the room. Keep the diode legs;
-they will be needed in the next step. Repeat until each diode position
-is filled.
+Once each set of diodes is soldered, trim the diode legs with wire
+cutters. Grip the diode leg as you trim it to keep it from flying
+across the room. Keep the diode legs; they will be needed in the next
+step. Repeat until each diode position is filled.
 
 \section{Controller}
 
@@ -161,14 +160,13 @@ First take the PCB with the labeled side down and fill the four corner
 holes in the center ``A-STAR'' section with solder. Insert diode legs
 into these holes while melting the solder. Then repeat the process for
 the other holes on the left, keeping them pointing as straight as
-possible. Leave the right side alone for now.
+possible. Leave the rest of the right side alone for now.
 
 \vspace{1em}
-\noindent\makebox[\textwidth]{%
-  \includegraphics[width=0.65\linewidth]{many-pins.jpg}}
+\begin{center}\includegraphics[width=0.8\columnwidth]{many-pins.jpg}\end{center}
 \vspace{1em}
 
-Fit the controller over the pins you've attached so far. Solder the
+Fit the controller over the legs you've attached so far. Solder the
 four corner pins already connected to the PCB into the corners of the
 controller. (The bottom left corner is unused; the pin above it is used
 instead.) Try to ensure the controller is as close to the PCB as
@@ -187,15 +185,16 @@ right-side holes. From the PCB side, all the holes will be used, but
 from the controller side, there will be some unused.
 
 \vspace{1em}
-\noindent\makebox[\textwidth]{%
-  \includegraphics[width=0.8\linewidth]{bent-legs.jpg}}
+\begin{center}
+  \includegraphics[width=0.8\columnwidth]{bent-legs.jpg}
+\end{center}
 \vspace{1em}
 
 Before you go on, take the time to double-check the solder joints on
 the controller. The solder should fill the hole completely without
-spilling over to adjacent holes, and the legs should be secure. Also
-check that all the diodes are facing the correct direction with the
-black band pointing to the bottom of the board.
+spilling over to adjacent holes. Also check that all the diodes are
+facing the correct direction with the black band pointing to the
+bottom of the board.
 
 \section{Firmware}
 
@@ -203,10 +202,6 @@ Installing the firmware now isn't strictly necessary, but it will
 allow you to spot mistakes before the board is finished.
 
 \vspace{1em}
-
-\begin{wrapfigure}{r}{0.25\linewidth}
-  \includegraphics[width=0.8\linewidth]{reset.jpg}
-\end{wrapfigure}
 
 Plug in the USB micro cable into the controller, and plug the other
 side into your computer. Get a copy of the
@@ -222,7 +217,7 @@ seconds.
 
 \vspace{1em}
 
-While it's in the bootloader mode, type \texttt{avrdude -p atmega32u4
+While it's in the bootloader mode, run \texttt{avrdude -p atmega32u4
   -c avr109 -U flash:w:atreus.hex -P /path/to/usb} from the directory
 containing the firmware\footnote{See the firmware readme for
   instructions about determining the USB argument and customizing the
@@ -240,6 +235,8 @@ the board so they will fit into the holes in the circuit board. Put
 the switch plate face-down on the table with the pins sticking
 up.
 
+\vspace{1em}
+
 Carefully fit the circuit board over the protruding pins with the
 labeled side down. Solder those corners to hold the circuit board and
 the switch plate together. The switches should be flush with the
@@ -248,32 +245,33 @@ pushing in a switch with a pin that's a bit bent will bend it flat and
 prevent it from poking through the circuit board.
 
 \vspace{1em}
-\noindent\makebox[\textwidth]{%
-  \includegraphics[width=0.7\linewidth]{some-switches.jpg}}
+\begin{center}
+  \includegraphics[width=0.9\columnwidth]{some-switches.jpg}
+\end{center}
 \vspace{1em}
 
 Next fill in the rest of the bottom row (SW1:3 through SW10:3) and the
 leftmost column (SW0:1 and SW0:2). If your kit has red linear switches
 which do not have any tactile bump, you can choose to use these for
-the modifier keys (shift, ctrl, alt, etc) or to leave the modifiers as
-normal tactile or clicky keys. Since modifier keys are held down, they
-do not benefit from tactility like normal keys do, so some people find
-they prefer linear keys there, but this is a matter of personal
-taste. The modifiers on the bottom row are SW2:3, SW3:3, and SW8:3.
-Place normal switches (usually grey or white) here if you want the
-modifiers to feel like the other keys, and red ones if not.
+the modifier keys (shift, ctrl, alt, etc) or to leave the modifiers
+using the same switches as the rest of the board.\footnote{Since
+  modifier keys are held down, they do not benefit from tactility like
+  normal keys do, so some people find they prefer linear keys there,
+  but this is a matter of personal taste.} The modifiers on the bottom
+row are SW2:3, SW3:3, and SW8:3.
 
 \vspace{1em}
 
-Solder the left and right pins of each of the switches you've placed so
-far, and then plug it in to test them to ensure that each row and column is
-connected back up to the controller correctly. Once you've confirmed
-this, solder the rest of the switches, but leave the middle two
-sideways ones for last.
+Solder the left and right pins of each of the switches you've placed
+so far, and then plug it in to a computer to test them to ensure that
+each row and column is connected back up to the controller
+correctly. Once you've confirmed this, solder the rest of the
+switches, but leave the middle two sideways ones for last.
 
 \vspace{1em}
-\noindent\makebox[\textwidth]{%
-  \includegraphics[width=0.7\linewidth]{center-switches.jpg}}
+\begin{center}
+  \includegraphics[width=0.9\columnwidth]{center-switches.jpg}
+\end{center}
 \vspace{1em}
 
 %% The main (non-rotated) switches on Matias kits have their pins
@@ -300,15 +298,15 @@ them.
 \section{Wrapping Up}
 
 If there's a misbehaving switch, it's often caused by a cold
-joint. Reflow the solder on both contacts of the switch and the diode
-first; if that doesn't fix it, it may be the connection to the
-controller. You can follow the traces for the rows back to the middle,
-but the columns on the back of the board are obscured when the
-keyboard is assembled; you can see them in this PCB
-diagram\footnote{https://atreus.technomancy.us/pcb}.
-Re-melting the controller's solder joint for the affected row or
-column is usually enough to get it working, but in some cases you may
-need to reach under to get the joint that connects it to the PCB.
+joint. Reflow the solder on both contacts of the switch and the
+diode. If an entire row or column is affected, it's probably the
+connection to the controller. You can follow the traces for the rows
+back to the middle, but the columns on the back of the board are
+obscured when the keyboard is assembled; you can see them in this PCB
+diagram\footnote{https://atreus.technomancy.us/pcb}. Re-melting the
+controller's solder joint for the affected row or column is usually
+enough to get it working. If you still can't
+get it working, email me: \texttt{phil@hagelb.org}.
 
 \vspace{1em}
 
@@ -327,23 +325,24 @@ desoldering the switch first.
 
 \vspace{1em}
 
-All that's left is to do is close the case by placing the switch plate
-on top of the spacer and bottom plate, placing the top plate on it,
-and screwing it together with the nuts facing up. If the controller
-was not attached close enough to the circuit board, it may be
-necessary to sand down the USB connector in order to close the
-case. If the rubber feet don't stay on with the provided adhesive,
-white glue may be needed to secure them.
+All that's left is to do is close the case by placing the spacer
+pieces and bottom plate on the keyboard while upside down, then
+putting some screws in. Flip it over and place the top plate on, then
+attach the nuts. If the controller was not attached close enough to
+the circuit board, it may be necessary to sand down the USB connector
+in order to close the case. If the rubber feet don't stay on with the
+provided adhesive, white glue may be needed to secure them.
 
 \vspace{1em}
 
-Congratulations. Enjoy your new keyboard. It will take a
+Congratulations! Enjoy your new keyboard. It will take a
 considerable adjustment period to get used to it, but it should result
 in much more comfortable and effective typing. Also remember that
 you're encouraged to customize the layout to make it truly your
-own. Happy typing!
+own.
 
-%% \noindent\makebox[\textwidth]{%
-%% \includegraphics[width=\linewidth]{finished.jpg}}
+\vspace{1em}
+
+Happy typing!
 
 \end{document}
