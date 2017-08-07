@@ -5,17 +5,17 @@
 \usepackage{graphicx}
 \usepackage[landscape,twocolumn]{geometry}
 \usepackage{wrapfig}
-\newgeometry{margin=1.6cm}
+\newgeometry{margin=2cm}
 \begin{document}
+\setlength{\columnsep}{1.4cm}
 \setlength{\parindent}{0cm}
 \maketitle
 \section{Prerequisites}
 
-Before starting make sure your kit has all its parts:
+Before starting, make sure your kit has all its parts:
 
 \begin{itemize}
-\item Case: top plate, switch plate, spacer\footnote{Your spacer may
-  be one contiguous piece or split into 3 pieces.}, bottom plate
+\item Case: top plate, switch plate, 3 spacer pieces, bottom plate
 \item Sandpaper: 100-220 grit and 1000-2000 grit waterproof
 \item Key switches: 42 tactile or clicky, 5 red optional
 \item Printed circuit board (PCB)
@@ -31,10 +31,11 @@ Before starting make sure your kit has all its parts:
 You'll also need to have these on hand:
 
 \begin{itemize}
-\item Can of spray lacquer or polyurethane (clear glossy recommended)
+\item Can of spray lacquer, shellac, or polyurethane
 \item Newspaper or other material to spray on
 \item Soldering iron and solder (lead-free not recommended)
 \item Wire cutters (not needed for presoldered kits)
+\item Eye protection for soldering
 \end{itemize}
 
 \vspace{1em}
@@ -43,8 +44,8 @@ The latest version of this document can always be found
 online.\footnote{http://atreus.technomancy.us/assembly.pdf} If you are
 hand-wiring a board without a PCB, see the older assembly
 guide.\footnote{http://atreus.technomancy.us/assembly-hand-wired.pdf}
-The photos in this guide depict Matias switches, (with rectangular
-switch stems) but you can use Cherry MX switches (with stems shaped
+The photos in this guide depict Matias switches (with rectangular
+switch stems), but you can use Cherry MX switches (with stems shaped
 like a +) as well.
 
 \section{Sanding}
@@ -74,19 +75,18 @@ fine cloth works well.
 Some people don't like the look of the exposed edges charred black
 from the laser cutter. You can choose to sand off the charring, or
 alternately cover it all with black ink from a sharpie marker for a
-more consistent look, or leave it alone.
+more consistent look, or just leave it alone.
 
-\section{Finishing}
+\section{Wood Finishing}
 
 Once the case is sanded down all over with coarse sandpaper, find a
-good place to spray the lacquer or polyurethane. It should be outdoors
-or in a well-ventilated garage. Lay down the newspaper with the pieces
-of the case on top of it. Spray your first coat of lacquer to the
-face-up side of each piece. Try to use a steady hand and keep the path
-of the spray overlapping itself just a small amount as you go to and
-fro to minimize runs but still cover all the area. The evenness of the
-spray matters less on the internal surfaces of the case, so that's a
-good place to practice and get the hang of it.
+good place to spray the lacquer or polyurethane; either outdoors or in
+a well-ventilated garage. Lay down the newspaper with the pieces of
+the case on top of it. Spray your first coat of lacquer to the face-up
+side of each piece. As you spray to and fro, overlapping the path of
+the spray slightly will minimize running. The evenness of the spray
+matters less on the internal surfaces of the case, so that's a good
+place to practice and get the hang of it.
 
 \vspace{1em}
 
@@ -108,8 +108,7 @@ take your fine sandpaper and soak it in water, then sand over the top
 and bottom surfaces lightly. Add a final coat and buff it with a fine
 cloth. If you make any mistakes or are unhappy with the smoothness of
 the finish, let it dry and add another layer of lacquer, then try
-lightly sanding it again until you're satisfied. If you have some wood
-finishing oil, you can apply it with your fingers.
+lightly sanding it again until you're satisfied.
 
 \section{Diodes}
 
@@ -141,9 +140,10 @@ them in place. Make sure they don't protrude up more than necessary.
 \vspace{1em}
 
 Once each set of diodes is soldered, trim the diode legs with wire
-cutters. Grip the diode leg as you trim it to keep it from flying
-across the room. Keep the diode legs; they will be needed in the next
-step. Repeat until each diode position is filled.
+cutters. Pinch the diode leg as you trim it to keep it from flying
+across the room or into an eye. \textbf{Keep the diode legs}; they will be
+needed in the next step. Repeat until each diode position is
+filled. Note that each row on the bottom needs six diodes instead of five.
 
 \section{Controller}
 
@@ -166,13 +166,15 @@ possible. Leave the rest of the right side alone for now.
 \begin{center}\includegraphics[width=0.8\columnwidth]{many-pins.jpg}\end{center}
 \vspace{1em}
 
-Fit the controller over the legs you've attached so far. Solder the
-four corner pins already connected to the PCB into the corners of the
-controller. (The bottom left corner is unused; the pin above it is used
-instead.) Try to ensure the controller is as close to the PCB as
-possible and not at an angle. Then solder the other left-side diode
-legs into the controller as well. Trim them all with your wire
-cutters when they are secure.
+Fit the controller over the legs you've attached so far. You can trim
+the legs some if it helps get the controller on, but don't cut them to
+less than a quarter of the original length. Solder the four corner
+pins already connected to the PCB into the corners of the
+controller. (The bottom left corner pin of the controller is unused;
+the pin above it is used instead.) Try to ensure the controller is as
+close to the PCB as possible and not at an angle. Then solder the
+other left-side diode legs into the controller as well. Trim them all
+with your wire cutters when they are secure.
 
 \vspace{1em}
 
@@ -211,7 +213,7 @@ first time you upload the firmware, you will have to use the hardware
 reset to enter the bootloader: take a diode leg or wire and touch one
 end to the reset pin and one end to the ground pin. (These are circled
 in the photo.)  Touch them together twice in under a second and the
-LED underneath will begin pulsing in a different pattern from the
+LED underneath will begin pulsing in a smoother pattern from the
 original blinking. This indicates it has entered bootloader mode for 8
 seconds.
 
@@ -229,11 +231,11 @@ together.
 \section{Switches}
 
 Next take four switches and place each switch in a corner of the
-switch plate. (The case layer with all the holes in it.) The switches
-should be oriented so that the side with pins is to the ``north'' of
-the board so they will fit into the holes in the circuit board. Put
-the switch plate face-down on the table with the pins sticking
-up.
+switch plate. (That's the case layer with all the holes in it.) The
+switches should be oriented so that the side with pins is to the
+``north'' of the board so they will fit into the holes in the circuit
+board. Put the switch plate face-down on the table with the pins
+sticking up.
 
 \vspace{1em}
 
@@ -266,34 +268,7 @@ Solder the left and right pins of each of the switches you've placed
 so far, and then plug it in to a computer to test them to ensure that
 each row and column is connected back up to the controller
 correctly. Once you've confirmed this, solder the rest of the
-switches, but leave the middle two sideways ones for last.
-
-\vspace{1em}
-\begin{center}
-  \includegraphics[width=0.9\columnwidth]{center-switches.jpg}
-\end{center}
-\vspace{1em}
-
-%% The main (non-rotated) switches on Matias kits have their pins
-%% positioned a bit lower on the switch than Cherry pins; this shifts
-%% the whole PCB a bit further down from where it would be on Cherry kits.
-
-%% The holes for the rotated switches are oriented according to their
-%% position on Cherry boards because Cherry switches cannot have their
-%% pins twisted; they have a plastic post that helps mount it on the
-%% PCB, but moving the middle holes down into the Matias-friendly
-%% position would make it completely incompatible with Cherry, while
-%% leaving it in the Cherry-friendly position simply makes it slightly
-%% inconvenient for Matias kits.
-
-Connecting the center two rotated thumb keys (SW5:0 and SW6:0) in kits
-with Matias switches requires a little bit of tweaking. (Cherry
-switches do not need this step.) The holes for the pins are not
-aligned quite under where the pins protrude. A little twisting will
-allow them to go in nicely. Note that the two switches must be twisted
-in opposite directions since they are oriented facing away from each
-other. You can use pliers or even just your wire cutters to twist
-them.
+switches.
 
 \section{Wrapping Up}
 
@@ -311,9 +286,9 @@ get it working, email me: \texttt{phil@hagelb.org}.
 \vspace{1em}
 
 You may want to add strain relief by wrapping the USB cable with
-electrical tape or a zip tie at the point just below where it leaves
-the case. This will make it so pulling on the cable does not dislodge
-it from the controller.
+electrical tape at the point just below where it leaves the case. This
+will make it so pulling on the cable does not dislodge it from the
+controller.
 
 \vspace{1em}
 
@@ -321,7 +296,10 @@ After the switches are all in and tested, place the keycaps. They can
 take a fair bit of pressure to go on, so support the underside of the
 board while pushing them on. Once the caps are on, they are very
 difficult to remove again; don't try to pull them off without
-desoldering the switch first.
+desoldering\footnote{Desoldering a single switch can be done with just
+  an iron, but for doing more you may want a pump or wick. See
+  https://blog.adafruit.com/2015/11/25/collins-lab-desoldering/} the
+switch first.
 
 \vspace{1em}
 
@@ -331,7 +309,9 @@ putting some screws in. Flip it over and place the top plate on, then
 attach the nuts. If the controller was not attached close enough to
 the circuit board, it may be necessary to sand down the USB connector
 in order to close the case. If the rubber feet don't stay on with the
-provided adhesive, white glue may be needed to secure them.
+provided adhesive, white glue may be needed to secure them. If you
+have some wood finishing oil or beeswax, you can apply it with your
+fingers after the feet go on.
 
 \vspace{1em}
 
