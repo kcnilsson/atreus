@@ -1,5 +1,10 @@
 # Change log
 
+## Mark 3.7: 2017-6-29
+
+* Manually bending middle switch pins on Alps is no longer necessary.
+* Spacer layer is split into three pieces to be less wasteful with materials.
+
 ## Mark 3.6: 2016-3-14
 
 * TMK is the default firmware.

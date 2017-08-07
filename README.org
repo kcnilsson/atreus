@@ -130,15 +130,16 @@ for one-off boards it's usually more sensible to stick with a [[http://atreus.te
 
 Layered laser-cut wood or acrylic. The [[http://geekhack.org/index.php?topic%3D54759.msg1304117#msg1304117][mark II case]] (EPS files in the
 =case/= directory) features 8 screw holes and a kind of "stair step"
-design around the top and bottom of the key clusters; mark I is
-pictured below.
+design around the top and bottom of the key clusters; mark I has
+straight lines.
 
-The =3mm-alps-all.eps= file contains the top plate, bottom plate, and
-switch plate for Matias switches. =3mm.eps= contains the files for
-Cherry boards. These pieces can all be cut on 3mm acrylic or wood. The
+The files =alps-top-plate-3mm.eps=, =alps-switch-plate-3mm.eps=, and
+=bottom-plate-3mm.eps= are to be cut in 3mm acrylic or wood. The
 =spacer.eps= file should be cut on something thicker; between 4.5mm
 and 6mm is recommended. The spacer needs to be at least as thick as
-the connector of the USB cable you're using.
+the connector of the USB cable you're using. If you are using Cherry
+switches, you should use =cherry-3mm.eps= for the top, switch, and
+bottom plates instead, but the spacer is the same.
 
 There is also a programmatically-implemented version of the case
 written in OpenSCAD; it is more flexible (you can tweak the number of
