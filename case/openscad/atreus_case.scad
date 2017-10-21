@@ -69,7 +69,7 @@ module rz(angle, center=undef) {
     rotate(angle) {
       translate(-center) {
         for (i=[0:$children-1])
-          child(i);
+          children(i);
       }
     }
   }
@@ -141,7 +141,7 @@ module rotate_half() {
   rotation_y_offset = 1.75 * column_spacing;
   for (i=[0:$children-1]) {
     rz(angle, [hand_separation, rotation_y_offset]) {
-      child(i);
+      children(i);
     }
   }
 }
@@ -151,7 +151,7 @@ module add_hand_separation() {
   for (i=[0:$children-1]) {
     translate([0.5*hand_separation, /* we get back the full separation
                                        because of mirroring */
-               0]) child(i);
+               0]) children(i);
   }
 }
 
