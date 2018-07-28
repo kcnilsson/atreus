@@ -15,13 +15,13 @@
 Before starting, make sure your kit has all its parts:
 
 \begin{itemize}
-\item Case: top plate, switch plate, 3 spacer pieces, bottom plate
+\item Case: top plate, switch plate, spacer pieces, bottom plate
 \item Sandpaper: 100-220 grit and 1000-2000 grit waterproof
 \item Key switches: 42 tactile or clicky, 5 red optional
 \item Printed circuit board (PCB)
 \item A-Star Micro controller\footnote{The controller and diodes will be
   attached to the PCB already in presoldered boards.}
-\item Diodes\textsuperscript{2}: 42
+\item Diodes\textsuperscript{1}: 42
 \item USB micro cable
 \item Key caps: 40 normal, 2 long
 \item Screws and nuts: 8 each, 16mm M3 size
@@ -41,22 +41,20 @@ You'll also need to have these on hand:
 \vspace{1em}
 
 The latest version of this document can always be found
-online.\footnote{http://atreus.technomancy.us/assembly.pdf} If you are
+online.\footnote{https://atreus.technomancy.us/assembly.pdf} If you are
 hand-wiring a board without a PCB, see the older assembly
-guide.\footnote{http://atreus.technomancy.us/assembly-hand-wired.pdf}
+guide.\footnote{https://atreus.technomancy.us/assembly-hand-wired.pdf}
 The photos in this guide depict Matias switches (with rectangular
 switch stems), but you can use Cherry MX switches (with stems shaped
 like a +) as well.
 
 \section{Sanding}
 
-Start by sanding with your rougher sandpaper. The top side of the
-top plate and the bottom side of the bottom plate are the only
-surfaces that are exposed to the touch once the keyboard is fully
-assembled, so these will need the most attention when sanding. You can
-sand the other surfaces as well just to get the scorch marks off, but
-you don't need to worry about how smooth the inner surfaces feel to
-the touch. (Acrylic cases can skip down to the ``Diodes'' step.)
+Acrylic cases can skip down to the ``Diodes'' step below. Otherwise
+start by sanding with your rougher sandpaper. The top side of the top
+plate and the bottom side of the bottom plate are the only surfaces
+that are exposed to the touch once the keyboard is fully assembled, so
+these are the ones you'll need to sand.
 
 \vspace{1em}
 \begin{center}
@@ -107,7 +105,7 @@ if you can keep them thinner. After your second-to-last coat dries,
 take your fine sandpaper and soak it in water, then sand over the top
 and bottom surfaces lightly. Add a final coat and buff it with a fine
 cloth. If you make any mistakes or are unhappy with the smoothness of
-the finish, let it dry and add another layer.
+the finish, let it dry and add another layer until you are satisfied.
 
 \section{Diodes}
 
@@ -220,12 +218,12 @@ seconds.
 
 While it's in the bootloader mode, run \texttt{avrdude -p atmega32u4
   -c avr109 -U flash:w:atreus.hex -P /path/to/usb} from the directory
-containing the firmware\footnote{See the firmware readme for
-  instructions about determining the USB argument and customizing the
-  layout.}. The firmware should be uploaded, and it will start
-functioning as a keyboard once switches are connected. Next time you
-upload, you can use the reset key instead of touching the pins
-together.
+containing the firmware\footnote{See
+  https://atreus.technomancy.us/upload for how to determine the USB
+  argument and customizing the layout.}. The firmware should be
+uploaded, and it will start functioning as a keyboard once switches
+are connected. Next time you upload, you can use the reset key instead
+of touching the pins together.
 
 \section{Switches}
 
@@ -259,7 +257,7 @@ using the same switches as the rest of the board.\footnote{Since
   modifier keys are held down, they do not benefit from tactility like
   normal keys do, so some people find they prefer linear keys there,
   but this is a matter of personal taste.} The modifiers on the bottom
-row are SW2:3, SW3:3, and SW8:3.
+row are SW2:3, SW3:3, and SW8:3 in the default layout.
 
 \vspace{1em}
 
@@ -307,10 +305,10 @@ pieces and bottom plate on the keyboard while upside down, then
 putting some screws in. Flip it over and place the top plate on, then
 attach the nuts. If the controller was not attached close enough to
 the circuit board, it may be necessary to sand down the USB connector
-in order to close the case. If the rubber feet don't stay on with the
-provided adhesive, white glue may be needed to secure them. If you
-have some wood finishing oil or beeswax, you can apply it with your
-fingers after the feet go on.
+to reduce its height in order to close the case. If the rubber feet
+don't stay on with the provided adhesive, white glue may be needed to
+secure them. If you have some wood finishing oil or beeswax, you can
+apply it with your fingers after the feet go on for a shinier surface.
 
 \vspace{1em}
 
