@@ -1,5 +1,9 @@
 # Change log
 
+## Deck I: 2018-7-28
+
+* QMK is the default firmware for all boards now.
+
 ## Mark 3.7: 2017-6-29
 
 * Manually bending middle switch pins on Alps is no longer necessary.

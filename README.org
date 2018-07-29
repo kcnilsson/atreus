@@ -53,10 +53,8 @@ brings it back to the first layer.
  :                           reset    ||             F1    F2    F3   F12
  :              super shift bksp ctrl || alt space   L0             
 
-The [[https://atreus.technomancy.us/tmk][firmware]] includes a number of other options, including
-colemak, dvorak, and "software dvorak" which sends keycodes assuming
-the OS will perform the translation into dvorak. Adding new layouts or
-changing existing ones is easy.
+The [[https://atreus.technomancy.us/download][firmware]] includes a number of other options, including
+colemak and dvorak. [[https://atreus.technomancy.us/qmk][Customizing your layout]] is easy to do with the QMK configurator interface.
 
 ** Parts
 
@@ -87,7 +85,7 @@ readily-available choice, but nearly any signal diode would work.
 *** Microcontroller
 
 The circuit board design uses a [[http://www.pololu.com/product/3101][Pololu A-star micro]]. Hand-wired boards
-can also use a [[http://www.pjrc.com/teensy/index.html][Teensy 2]] or [[http://arduino.cc/en/Main/ArduinoBoardMicro][Arduino Pro Micro]].
+can also use a [[http://arduino.cc/en/Main/ArduinoBoardMicro][Arduino Pro Micro]].
 
 Be sure to get a microcontroller without headers so it will fit in
 between the bottom layer and the plate. USB micro is preferred over
@@ -135,11 +133,12 @@ straight lines.
 
 The files =alps-top-plate-3mm.eps=, =alps-switch-plate-3mm.eps=, and
 =bottom-plate-3mm.eps= are to be cut in 3mm acrylic or wood. The
-=spacer.eps= file should be cut on something thicker; between 4.5mm
-and 6mm is recommended. The spacer needs to be at least as thick as
-the connector of the USB cable you're using. If you are using Cherry
-switches, you should use =cherry-3mm.eps= for the top, switch, and
-bottom plates instead, but the spacer is the same.
+=spacer.eps= file can be cut on something thicker; between 4.5mm and
+6mm is recommended. Alternatively you can cut it in 3mm twice. The
+spacer needs to be at least as thick as the connector of the USB cable
+you're using. If you are using Cherry switches, you should use
+=cherry-3mm.eps= for the top, switch, and bottom plates instead, but
+the spacer is the same.
 
 There is also a programmatically-implemented version of the case
 written in OpenSCAD; it is more flexible (you can tweak the number of
@@ -154,23 +153,23 @@ On a 100W Epilog laser, the 3mm layers cut in about a minute and a
 half. I did a run with 6mm acrylic of the other layers which took
 nearly 6 minutes.
 
-Wood cases should be finished with sandpaper and finishing oil/wax or
-with [[https://atreus.technomancy.us/lacquer.pdf][lacquer]] which
-takes longer but feels nicer.
+Wood cases should be finished with sandpaper and lacquer, shellac, or polyurethane.
 
 ** Firmware
 
-The [[https://atreus.technomancy.us/tmk][TMK firmware]] is
-recommended. You should be able to change into the =keyboard/atreus=
-directory and run =make KEYMAP=qwerty= (or whichever variant you want)
-to produce a qwerty =atreus.hex= file. You will probably want to
-create your own layout once you've gotten a chance to try it and see
-what works for you. See the readme for instructions of how to upload
-it to the keyboard's controller.
+The [[https://qmk.fm][QMK firmware]] is
+recommended. [[https://atreus.technomancy.us/download][Standard
+layouts]] are available precompiled, or you can
+[[https://atreus.technomancy.us/qmk][design your own]] in the
+configurator.
 
-There is also the older [[https://github.com/technomancy/atreus-firmware][atreus-firmware]] custom codebase which works
-but has fewer features. It is recommended mostly for learning purposes
-since the code is much simpler and easier to understand than TMK.
+There is also the older
+[[https://github.com/technomancy/atreus-firmware][atreus-firmware]]
+custom codebase which works but has fewer features. It is recommended
+mostly for learning purposes since the code is much simpler and easier
+to understand than QMK. Previously TMK was the recommended choice for
+firmware, but QMK has much better documentation and ease of use and is
+now recommended.
 
 ** Bill of Materials
 
@@ -236,11 +235,11 @@ Atreus or are interested in doing so.
 
 ** Orestes
 
-A new [[https://www.flickr.com/photos/technomancy/14654421878][experimental build]] uses the [[http://pjrc.com/store/teensy31.html][Teensy 3]] microcontroller and
-ARM [[https://github.com/technomancy/orestes/tree/teensy3][Forth-based]] firmware, but this is not yet suitable for general-purpose use.
+An [[https://www.flickr.com/photos/technomancy/14654421878][experimental build]] uses the [[http://pjrc.com/store/teensy31.html][Teensy 3]] microcontroller and
+ARM [[https://github.com/technomancy/orestes/tree/teensy3][Forth-based]] firmware, but this is not really suitable for general-purpose use; it's more of a curiosity.
 
 ** License
 
-Copyright © 2014-2016 Phil Hagelberg and contributors
+Copyright © 2014-2018 Phil Hagelberg and contributors
 
 Released under the [[https://www.gnu.org/licenses/gpl.html][GNU GPL version 3]]
