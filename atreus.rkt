@@ -120,7 +120,7 @@
     (net 8  N-col-3)
     (net 9  N-col-4)
     (net 10 N-col-5)
-    ,@(for/list ([s (in-range 42)])
+    ,@(for/list ([s (in-range 24)])
         (list 'net (+ 11 s) (string->symbol (format "N-diode-~s" s))))))
 
 (define (net-class nets)
@@ -151,7 +151,8 @@
                 (+ (* (+ 1 col) spacing) x-offset 9))]
          [y (cond [(and (= col 5) (= row 2)) 81]
                   [(and (= col 5) (= row 3)) 84]
-                  [#t (+ (list-ref column-offsets col) (* spacing row) y-offset)])]
+                  [true (+ (list-ref column-offsets col)
+                           (* spacing row) y-offset)])]
          [r (if (= col 5) 270 0)]
          [label (format "D~a:~a" col row)]
          [diode (+ row (* col 4))])
@@ -159,21 +160,127 @@
                   `(net ,(+ 11 diode)
                     ,(string->symbol (format "N-diode-~s" diode)))
                   `(net ,(+ row 1)
-                    ,(string->symbol (format "N-row-~s" row))))))
+                        ,(string->symbol (format "N-row-~s" row))))))
+
+(define (column-traces col)
+  (let* ([xo (* col spacing)]
+         [yo (- (list-ref column-offsets col) 8)])
+    (for/list ([coords '[[36.46 22.92 34.23 22.92]
+                         [33.02 24.13 33.02 26.67]
+                         [34.23 22.92 33.02 24.13]
+                         [35.19 44.46 31.75 44.46]
+                         [31.75 44.46 31.75 44.45]
+                         [31.75 41.91 36.45 41.91]
+                         [36.45 41.91 35.19 43.17]
+                         [35.19 43.17 35.19 44.46]
+                         [36.46 79.92 36.46 81.19]
+                         [36.46 81.19 35.19 82.46]
+                         [31.75 60.96 36.42 60.96]
+                         [36.42 60.96 36.83 60.55]
+                         [36.83 60.55 36.83 59.69]
+                         [31.75 63.50 35.15 63.50]
+                         [35.15 63.50 36.46 62.19]
+                         [36.46 62.19 36.46 60.92]
+                         [31.75 79.02 35.56 79.02]
+                         [35.56 79.02 36.46 79.92]
+                         [36.46 22.92 36.46 24.19]
+                         [36.46 24.19 35.25 25.40]
+                         [35.25 25.40 34.29 25.40]
+                         [34.29 25.40 33.02 26.67]
+                         [33.02 26.67 31.75 27.94]
+                         [31.75 27.94 31.75 41.91]
+                         [31.75 41.91 31.75 44.45]
+                         [31.75 44.45 31.75 60.96]
+                         [31.75 60.96 31.75 63.50]
+                         [31.75 63.50 31.75 79.02]
+                         [31.75 79.02 35.19 82.46]]])
+      (match coords
+        [(list xs ys xe ye) `(segment (start ,(+ xo xs) ,(+ yo ys))
+                                      (end ,(+ xo xe) ,(+ yo ye))
+                                      (width 0.2032) (layer Front)
+                                      (net ,(+ col 5)))]))))
+(define (row-traces row)
+  (let* ([yo (+ (* rows spacing -1) (* (add1 row) spacing))]
+         [row3 '[[127.65 58.89 127.65 62.88] ; extra bits for the middle keys
+                 [127.00 95.25 125.73 93.98]
+                 [140.97 95.25 127.00 95.25]
+                 [140.97 68.58 140.97 95.25]
+                 [138.43 66.04 140.97 68.58]
+                 [130.81 66.04 138.43 66.04]
+                 [127.65 62.88 130.81 66.04]
+                 [125.73 93.98 125.73 90.17]
+                 [123.19 93.98 125.73 93.98]
+                 [121.02 91.81 123.19 93.98]
+                 [124.09 91.81 125.73 90.17]
+                 [125.73 90.17 127.00 88.90]
+                 [127.00 87.19 130.19 84.00]
+                 [127.00 88.90 127.00 87.19]]]
+         [all-rows '[[102.87 86.81 102.87 87.63]
+                     [104.14 88.90 105.41 88.90]
+                     [102.87 87.63 104.14 88.90]
+                     [120.65 91.81 121.02 91.81]
+                     [105.00 86.81 105.00 88.49]
+                     [105.00 88.49 105.41 88.90]
+                     [108.32 91.81 120.65 91.81]
+                     [105.41 88.90 108.32 91.81]
+                     [120.65 91.81 124.09 91.81]
+                     [69.850 85.81 69.130 85.81]
+                     [67.310 87.63 65.200 87.63]
+                     [69.130 85.81 67.310 87.63]
+                     [84.040 82.77 87.630 82.77]
+                     [67.000 85.81 69.850 85.81]
+                     [69.850 85.81 81.000 85.81]
+                     [81.000 85.81 84.040 82.77]
+                     [84.040 82.77 86.000 80.81]
+                     [48.000 88.81 64.000 88.81]
+                     [72.000 80.81 86.000 80.81]
+                     [64.000 88.81 72.000 80.81]
+                     [86.000 80.81 87.630 82.44]
+                     [87.630 82.44 87.630 82.77]
+                     [87.630 82.77 87.630 85.09]
+                     [89.350 86.81 101.60 86.81]
+                     [87.630 85.09 89.350 86.81]
+                     [101.60 86.81 102.87 86.81]
+                     [102.87 86.81 104.59 86.81]]])
+    (for/list ([coords (if (= row 3) (append row3 all-rows) all-rows)])
+      (match coords
+        [(list xs ys xe ye) `(segment (start ,xs ,(+ yo ys))
+                                      (end ,xe ,(+ yo ye))
+                                      (width 0.2032) (layer Back)
+                                      (net ,(+ row 1)))]))))
+
+(define (diode-traces row col)
+  (let* ([xo (* col spacing)]
+         [yo (+ (list-ref column-offsets col) -8 (* row spacing))])
+    (for/list ([coords '[[48.00 24.19 48.00 23.87]
+                         [48.00 23.87 47.05 22.92]
+                         [47.05 22.92 41.54 22.92]
+                         [41.54 22.92 42.81 24.19]
+                         [42.81 24.19 42.81 25.46]
+                         [42.81 25.46 44.08 24.19]
+                         [44.08 24.19 48.00 24.19]]])
+      (match coords
+        [(list xs ys xe ye) `(segment (start ,(+ xo xs) ,(+ yo ys))
+                                      (end ,(+ xo xe) ,(+ yo ye))
+                                      (width 0.2032) (layer Back)
+                                      (net ,(+ row (* col 4) 11)))]))))
 
 (define switches+diodes
   (for/list ([col (in-range cols)] #:when true
-             [row (if (or (= 5 col) (= 6 col))
-                      '(2 3) (in-range rows))])
-    (list (switch row col) (diode row col))))
-
-;; TODO: row bridges
-;; TODO: traces
+             [row (if (= 5 col)
+                      '(2 3)
+                      (in-range rows))])
+    (append (list (switch row col) (diode row col))
+            (if (= 5 col)
+                '()
+                (diode-traces row col)))))
 
 (define board
   (apply append nets
          (list (net-class nets))
          (list microcontroller-module)
+         (apply append (map column-traces (range (sub1 cols))))
+         (apply append (map row-traces (range rows)))
          switches+diodes))
 
 (define (write-placement filename)
@@ -186,9 +293,6 @@
       (display "\n" op)
       (for ([f board])
         (pretty-print f op 1))
-      ;; TODO: traces!
-      (display (call-with-input-file "traces.rktd"
-                 (curry read-string 999999)) op)
       (display ")" op))))
 
 (write-placement "atreus.kicad_pcb")
