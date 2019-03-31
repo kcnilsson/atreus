@@ -1,20 +1,21 @@
 #lang racket
 
-(define cols 6)
+(define cols 12)
 (define rows 4)
 
 (define x-offset 20)
 (define y-offset 20)
 
 (define spacing 19)
-(define angle 0)
+(define angle 10)
 
-(define column-offsets '(8 5 0 6 11 15))
+(define column-offsets '(8 5 0 6 11 59 59 11 6 0 5 8))
 
 (define (switch-module x y rotation label net-pos net-neg)
+  ;; TODO: set timestamps?
   `(module MX_FLIP (layer Front) (tedit 4FD81CDD) (tstamp 543EF801)
     (at ,x ,y ,rotation)
-    (path /543DB910)
+    (path /543DB910) ; TODO: this is not documented; no idea what it does
     (fp_text reference ,label (at 0 3.302 ,rotation) (layer F.SilkS)
              (effects (font (size 1.524 1.778) (thickness 0.254))))
     (fp_line (start -6.35 -6.35) (end 6.35 -6.35)
@@ -80,11 +81,14 @@
 
 (define microcontroller-module
   `(module A_STAR (layer Front) (tedit 4FDC31C8) (tstamp 543EF800)
-    (at 134 50 270)
+    (at 134 70 270)
     (path /543EEB02)
+    (fp_text value A-STAR (at -3 0 270) (layer F.SilkS)
+             (effects (font (size 3.048 2.54) (thickness 0.4572))))
     (fp_line (start -15.24 7.62) (end 10.1 7.62) (layer F.SilkS) (width 0.381))
+    (fp_line (start 10.1 7.62) (end 10.1 -7.62) (layer F.SilkS) (width 0.381))
+    (fp_line (start 10.1 -7.62) (end -15.24 -7.62) (layer F.SilkS) (width 0.381))
 
-    ;; columns
     (pad B5 thru_hole circle (at -13.97 6.35 270) (size 1.7526 1.7526)
          (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 7 N-col-2))
     (pad B4 thru_hole circle (at -11.43 6.35 270) (size 1.7526 1.7526)
@@ -98,7 +102,6 @@
     (pad D4 thru_hole circle (at -1.27 6.35 270) (size 1.7526 1.7526)
          (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 10 N-col-5))
 
-    ;; rows
     (pad D0 thru_hole circle (at 1.27 6.35 270) (size 1.7526 1.7526)
          (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 1 N-row-0))
     (pad D1 thru_hole circle (at 3.81 6.35 270) (size 1.7526 1.7526)
@@ -106,7 +109,22 @@
     (pad D3 thru_hole circle (at 6.35 6.35 270) (size 1.7526 1.7526)
          (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 3 N-row-2))
     (pad D2 thru_hole circle (at 8.89 6.35 270) (size 1.7526 1.7526)
-         (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 4 N-row-3))))
+         (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 4 N-row-3))
+
+    (pad F7 thru_hole circle (at -13.97 -6.35 270) (size 1.7526 1.7526)
+         (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 13 N-col-8))
+    (pad F6 thru_hole circle (at -11.43 -6.35 270) (size 1.7526 1.7526)
+         (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 12 N-col-7))
+    (pad B6 thru_hole circle (at -8.89 -6.35 270) (size 1.7526 1.7526)
+         (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 11 N-col-6))
+    (pad B7 thru_hole circle (at -6.35 -6.35 270) (size 1.7526 1.7526)
+         (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 15 N-col-10))
+    (pad D6 thru_hole circle (at -3.81 -6.35 270) (size 1.7526 1.7526)
+         (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 14 N-col-9))
+    (pad RST thru_hole circle (at -1.27 -6.35 270) (size 1.7526 1.7526)
+       (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 0 ""))
+    (pad GND thru_hole circle (at 6.35 -6.35 270) (size 1.7526 1.7526)
+         (drill 1.0922) (layers *.Cu *.SilkS *.Mask) (net 0 ""))))
 
 (define nets
   `((net 0 "")
@@ -120,8 +138,13 @@
     (net 8  N-col-3)
     (net 9  N-col-4)
     (net 10 N-col-5)
-    ,@(for/list ([s (in-range 24)])
-        (list 'net (+ 11 s) (string->symbol (format "N-diode-~s" s))))))
+    (net 11 N-col-6)
+    (net 12 N-col-7)
+    (net 13 N-col-8)
+    (net 14 N-col-9)
+    (net 15 N-col-10)
+    ,@(for/list ([s (in-range 42)])
+        (list 'net (+ 16 s) (string->symbol (format "N-diode-~s" s))))))
 
 (define (net-class nets)
   (append '(net_class Default "This is the default net class."
@@ -135,152 +158,84 @@
             (list 'add_net (last n)))))
 
 (define (switch row col)
-  (let* ([x (+ (* (+ 1 col) spacing) x-offset)]
-         [y (+ (list-ref column-offsets col) (* spacing row) y-offset)]
+  (let* ([left? (< col 6)]
+         [rotation (if left? -10 10)]
+         [x (* (+ 1 col) spacing)]
+         [y (+ (list-ref column-offsets col) (* spacing row))]
+         [hypotenuse (sqrt (+ (* x x) (* y y)))]
+         [Θ (atan (/ y x))]
+         [Θ′ (- Θ (degrees->radians rotation))]
+         [x′ (+ (if left? x-offset 5) (* hypotenuse (cos Θ′)))]
+         [y′ (+ (if left? y-offset (+ y-offset 42.885)) (* hypotenuse (sin Θ′)))]
          [label (format "SW~a:~a" col row)]
          [diode (+ row (* col 4))]
-         [diode-net `(net ,(+ 11 diode)
+         ;; if we try to number nets linearly, kicad segfaults; woo!
+         ;; so we re-use the nets we skipped with the missing col 5/6 diodes
+         [diode (cond [(> diode 44) (- diode 20)]
+                      [(> diode 41) (- diode 21)]
+                      [true diode])]
+         [net-col (if left? col (- col 1))]
+         [diode-net `(net ,(+ 16 diode)
                       ,(string->symbol (format "N-diode-~s" diode)))]
-         [column-net `(net ,(+ col 5)
-                       ,(string->symbol (format "N-col-~s" col)))])
-    (switch-module x y 0 label diode-net column-net)))
+         [column-net `(net ,(+ net-col 5)
+                       ,(string->symbol (format "N-col-~s" net-col)))]
+         ;; rotate middle keys additional 90° after calculating position
+         [rotation (cond [(= 5 col) 80]
+                         [(= 6 col) 280]
+                         [true rotation])])
+    (switch-module x′ y′ rotation label
+                   (if left? diode-net column-net)
+                   (if left? column-net diode-net))))
 
 (define (diode row col)
-  (let* ([x (if (= col 5)
-                134
-                (+ (* (+ 1 col) spacing) x-offset 9))]
-         [y (cond [(and (= col 5) (= row 2)) 81]
-                  [(and (= col 5) (= row 3)) 84]
-                  [true (+ (list-ref column-offsets col)
-                           (* spacing row) y-offset)])]
-         [r (if (= col 5) 270 0)]
+  (let* ([left? (< col 6)]
+         [rotation (if left? -10 10)]
+         [x (* (+ 1 col) spacing)]
+         [y (+ (list-ref column-offsets col) (* spacing row))]
+         [hypotenuse (sqrt (+ (* x x) (* y y)))]
+         [Θ (atan (/ y x))]
+         [Θ′ (- Θ (degrees->radians rotation))]
+         [x′ (+ (if left? x-offset 5) (* hypotenuse (cos Θ′))
+                (if left? 9 -9))]
+         [y′ (+ (if left? y-offset (+ y-offset 42.885))
+                (* hypotenuse (sin Θ′)))]
          [label (format "D~a:~a" col row)]
-         [diode (+ row (* col 4))])
-    (diode-module x y r label
-                  `(net ,(+ 11 diode)
+         [diode (+ row (* col 4))]
+         ;; if we try to number nets linearly, kicad segfaults; woo!
+         ;; so we re-use the nets we skipped with the missing col 5/6 diodes
+         [diode (cond [(> diode 44) (- diode 20)]
+                      [(> diode 41) (- diode 21)]
+                      [true diode])]
+         [net-row (cond [(= col 5) 2]
+                        [(= col 6) 3]
+                        [true row])])
+    (diode-module x′ y′ rotation label
+                  `(net ,(+ 16 diode)
                     ,(string->symbol (format "N-diode-~s" diode)))
-                  `(net ,(+ row 1)
-                        ,(string->symbol (format "N-row-~s" row))))))
-
-(define (column-traces col)
-  (let* ([xo (* col spacing)]
-         [yo (- (list-ref column-offsets col) 8)])
-    (for/list ([coords '[[36.46 22.92 34.23 22.92]
-                         [33.02 24.13 33.02 26.67]
-                         [34.23 22.92 33.02 24.13]
-                         [35.19 44.46 31.75 44.46]
-                         [31.75 44.46 31.75 44.45]
-                         [31.75 41.91 36.45 41.91]
-                         [36.45 41.91 35.19 43.17]
-                         [35.19 43.17 35.19 44.46]
-                         [36.46 79.92 36.46 81.19]
-                         [36.46 81.19 35.19 82.46]
-                         [31.75 60.96 36.42 60.96]
-                         [36.42 60.96 36.83 60.55]
-                         [36.83 60.55 36.83 59.69]
-                         [31.75 63.50 35.15 63.50]
-                         [35.15 63.50 36.46 62.19]
-                         [36.46 62.19 36.46 60.92]
-                         [31.75 79.02 35.56 79.02]
-                         [35.56 79.02 36.46 79.92]
-                         [36.46 22.92 36.46 24.19]
-                         [36.46 24.19 35.25 25.40]
-                         [35.25 25.40 34.29 25.40]
-                         [34.29 25.40 33.02 26.67]
-                         [33.02 26.67 31.75 27.94]
-                         [31.75 27.94 31.75 41.91]
-                         [31.75 41.91 31.75 44.45]
-                         [31.75 44.45 31.75 60.96]
-                         [31.75 60.96 31.75 63.50]
-                         [31.75 63.50 31.75 79.02]
-                         [31.75 79.02 35.19 82.46]]])
-      (match coords
-        [(list xs ys xe ye) `(segment (start ,(+ xo xs) ,(+ yo ys))
-                                      (end ,(+ xo xe) ,(+ yo ye))
-                                      (width 0.2032) (layer Front)
-                                      (net ,(+ col 5)))]))))
-(define (row-traces row)
-  (let* ([yo (+ (* rows spacing -1) (* (add1 row) spacing))]
-         [row3 '[[127.65 58.89 127.65 62.88] ; extra bits for the middle keys
-                 [127.00 95.25 125.73 93.98]
-                 [140.97 95.25 127.00 95.25]
-                 [140.97 68.58 140.97 95.25]
-                 [138.43 66.04 140.97 68.58]
-                 [130.81 66.04 138.43 66.04]
-                 [127.65 62.88 130.81 66.04]
-                 [125.73 93.98 125.73 90.17]
-                 [123.19 93.98 125.73 93.98]
-                 [121.02 91.81 123.19 93.98]
-                 [124.09 91.81 125.73 90.17]
-                 [125.73 90.17 127.00 88.90]
-                 [127.00 87.19 130.19 84.00]
-                 [127.00 88.90 127.00 87.19]]]
-         [all-rows '[[102.87 86.81 102.87 87.63]
-                     [104.14 88.90 105.41 88.90]
-                     [102.87 87.63 104.14 88.90]
-                     [120.65 91.81 121.02 91.81]
-                     [105.00 86.81 105.00 88.49]
-                     [105.00 88.49 105.41 88.90]
-                     [108.32 91.81 120.65 91.81]
-                     [105.41 88.90 108.32 91.81]
-                     [120.65 91.81 124.09 91.81]
-                     [69.850 85.81 69.130 85.81]
-                     [67.310 87.63 65.200 87.63]
-                     [69.130 85.81 67.310 87.63]
-                     [84.040 82.77 87.630 82.77]
-                     [67.000 85.81 69.850 85.81]
-                     [69.850 85.81 81.000 85.81]
-                     [81.000 85.81 84.040 82.77]
-                     [84.040 82.77 86.000 80.81]
-                     [48.000 88.81 64.000 88.81]
-                     [72.000 80.81 86.000 80.81]
-                     [64.000 88.81 72.000 80.81]
-                     [86.000 80.81 87.630 82.44]
-                     [87.630 82.44 87.630 82.77]
-                     [87.630 82.77 87.630 85.09]
-                     [89.350 86.81 101.60 86.81]
-                     [87.630 85.09 89.350 86.81]
-                     [101.60 86.81 102.87 86.81]
-                     [102.87 86.81 104.59 86.81]]])
-    (for/list ([coords (if (= row 3) (append row3 all-rows) all-rows)])
-      (match coords
-        [(list xs ys xe ye) `(segment (start ,xs ,(+ yo ys))
-                                      (end ,xe ,(+ yo ye))
-                                      (width 0.2032) (layer Back)
-                                      (net ,(+ row 1)))]))))
-
-(define (diode-traces row col)
-  (let* ([xo (* col spacing)]
-         [yo (+ (list-ref column-offsets col) -8 (* row spacing))])
-    (for/list ([coords '[[48.00 24.19 48.00 23.87]
-                         [48.00 23.87 47.05 22.92]
-                         [47.05 22.92 41.54 22.92]
-                         [41.54 22.92 42.81 24.19]
-                         [42.81 24.19 42.81 25.46]
-                         [42.81 25.46 44.08 24.19]
-                         [44.08 24.19 48.00 24.19]]])
-      (match coords
-        [(list xs ys xe ye) `(segment (start ,(+ xo xs) ,(+ yo ys))
-                                      (end ,(+ xo xe) ,(+ yo ye))
-                                      (width 0.2032) (layer Back)
-                                      (net ,(+ row (* col 4) 11)))]))))
+                  `(net ,(+ net-row 1)
+                    ,(string->symbol (format "N-row-~s" net-row))))))
 
 (define switches+diodes
-  (for/list ([col (in-range cols)] #:when true
-             [row (if (= 5 col)
-                      '(2 3)
-                      (in-range rows))])
-    (append (list (switch row col) (diode row col))
-            (if (= 5 col)
-                '()
-                (diode-traces row col)))))
+  (for/list ([col (in-range cols)]
+             #:when true
+             [row (if (or (= 5 col) (= 6 col))
+                      '(0) (in-range rows))])
+    (list (switch row col) (diode row col))))
+
+(define edge-cuts
+  (for/list [(s '([31 22] [84 22] [127 30] [127 54] [130 54] [130 60] [138 60]
+                  [138 54] [141 54] [141 30] [185 22]
+                  [237 22] [250 95] [161 112] [107 112] [18 95]))
+             (e '([84 22] [127 30] [127 54] [130 54] [130 60] [138 60] [138 54]
+                  [141 54] [141 30] [185 22]
+                  [237 22] [250 95] [161 112] [107 112] [18 95] [31 22]))]
+    `(gr_line (start ,@s) (end ,@e) (angle 90) (layer Edge.Cuts) (width 0.3))))
 
 (define board
   (apply append nets
          (list (net-class nets))
          (list microcontroller-module)
-         (apply append (map column-traces (range (sub1 cols))))
-         (apply append (map row-traces (range rows)))
+         edge-cuts
          switches+diodes))
 
 (define (write-placement filename)
@@ -293,6 +248,8 @@
       (display "\n" op)
       (for ([f board])
         (pretty-print f op 1))
+      (display (call-with-input-file "traces.rktd"
+                 (curry read-string 999999)) op)
       (display ")" op))))
 
 (write-placement "atreus.kicad_pcb")
