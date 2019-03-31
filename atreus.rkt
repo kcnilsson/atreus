@@ -9,7 +9,7 @@
 (define spacing 19)
 (define angle 10)
 
-(define column-offsets '(8 5 0 6 11 59 59 11 6 0 5 8))
+(define column-offsets '(8 5 0 6 11 53 53 11 6 0 5 8))
 
 (define (switch-module x y rotation label net-pos net-neg)
   ;; TODO: set timestamps?
@@ -81,11 +81,8 @@
 
 (define microcontroller-module
   `(module A_STAR (layer Front) (tedit 4FDC31C8) (tstamp 543EF800)
-    (at 134 70 270)
+    (at 134 65 270)
     (path /543EEB02)
-    (fp_text value A-STAR (at -3 0 270) (layer F.SilkS)
-             (effects (font (size 3.048 2.54) (thickness 0.4572))))
-    (fp_line (start -15.24 7.62) (end 10.1 7.62) (layer F.SilkS) (width 0.381))
     (fp_line (start 10.1 7.62) (end 10.1 -7.62) (layer F.SilkS) (width 0.381))
     (fp_line (start 10.1 -7.62) (end -15.24 -7.62) (layer F.SilkS) (width 0.381))
 
@@ -178,11 +175,7 @@
          [diode-net `(net ,(+ 16 diode)
                       ,(string->symbol (format "N-diode-~s" diode)))]
          [column-net `(net ,(+ net-col 5)
-                       ,(string->symbol (format "N-col-~s" net-col)))]
-         ;; rotate middle keys additional 90° after calculating position
-         [rotation (cond [(= 5 col) 80]
-                         [(= 6 col) 280]
-                         [true rotation])])
+                       ,(string->symbol (format "N-col-~s" net-col)))])
     (switch-module x′ y′ rotation label
                    (if left? diode-net column-net)
                    (if left? column-net diode-net))))
@@ -219,15 +212,17 @@
   (for/list ([col (in-range cols)]
              #:when true
              [row (if (or (= 5 col) (= 6 col))
-                      '(0) (in-range rows))])
+                      '(0 1) (in-range rows))])
     (list (switch row col) (diode row col))))
 
 (define edge-cuts
-  (for/list [(s '([31 22] [84 22] [127 30] [127 54] [130 54] [130 60] [138 60]
-                  [138 54] [141 54] [141 30] [185 22]
+  (for/list [(s '([31 22] [84 22] [127 30]
+                          [129 49] [129 75] [139 75]
+                  [139 49] [141 30] [185 22]
                   [237 22] [250 95] [161 112] [107 112] [18 95]))
-             (e '([84 22] [127 30] [127 54] [130 54] [130 60] [138 60] [138 54]
-                  [141 54] [141 30] [185 22]
+             (e '([84 22] [127 30]
+                          [129 49] [129 75] [139 75] [139 49]
+                  [141 30] [185 22]
                   [237 22] [250 95] [161 112] [107 112] [18 95] [31 22]))]
     `(gr_line (start ,@s) (end ,@e) (angle 90) (layer Edge.Cuts) (width 0.3))))
 
@@ -251,5 +246,11 @@
       (display (call-with-input-file "traces.rktd"
                  (curry read-string 999999)) op)
       (display ")" op))))
+
+;; TODOs:
+
+;; controller traces
+;; middle switch traces
+;; middle switch diodes below
 
 (write-placement "atreus.kicad_pcb")
