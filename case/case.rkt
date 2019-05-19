@@ -1,7 +1,11 @@
 #lang racket
-;; Atreus case design mk 4
+;; Atreus 2 case design
 ;; Copyright © 2019 Phil Hagelberg and contributors
 ;; released under the GPLv3 or later
+
+;; TODO:
+;; * port notch on bottom plate and spacer
+;; * top layer
 
 (require xml)
 
@@ -26,37 +30,36 @@
 
 (define switch-spacing 19.0)
 
-(define screw-radius 1.642) ; for M3 screws
+(define screw-radius 1.4) ; for M3 screws + kerf
 
-(define side-screw-distance (- (* switch-spacing (+ rows 1)) switch-height))
-(define bottom-screw-distance (- (* switch-spacing (+ cols 1)) switch-width))
+(define side-screw-distance (* switch-spacing rows))
+(define bottom-screw-distance (* switch-spacing cols))
 (define left corner-radius)
 (define bottom 95) ; outer bottom
 (define left-top (+ left (* side-screw-distance (sin angle))))
 (define top (- bottom (* side-screw-distance (cos angle))))
 (define right (- width corner-radius))
 (define right-top (- right (* side-screw-distance (sin angle))))
-(define mid-bottom (+ bottom (* bottom-screw-distance (sin angle))))
+(define mid-bottom (+ bottom (* bottom-screw-distance (sin angle)) -3))
 (define mid-offset 25)
-(define mid-left (- (/ width 2) mid-offset))
-(define mid-right (+ (/ width 2) mid-offset))
+(define mid-x (/ width 2))
+(define mid-left (- mid-x mid-offset))
+(define mid-right (+ mid-x mid-offset))
 
-(define hull-coords (list (list mid-right top)
-                          (list right-top top)
+(define hull-coords (list (list right-top top)
                           (list right bottom)
                           (list mid-right mid-bottom)
                           (list mid-left mid-bottom)
                           (list left bottom)
-                          (list left-top top)
-                          (list mid-left top)))
+                          (list left-top top)))
 
 ;;; screws
 (define screws
-  `(g () ,@(for/list ([s (append (take hull-coords 3)
+  `(g () ,@(for/list ([s (append (take hull-coords 2)
                                  ;; the bottom middle has only one screw but
                                  ;; two hull positions
                                  (list (list (/ width 2) mid-bottom))
-                                 (drop hull-coords 5))])
+                                 (drop hull-coords 4))])
              `(circle ((r ,(number->string screw-radius))
                        (cx ,(number->string (first s)))
                        (cy ,(number->string (second s))))))))
@@ -87,12 +90,26 @@
             (outline-points coords (sub1 theta) current-screw)))
       coords))
 
-(define outline `(polygon
-                  ((points ,(string-join (outline-points '() 90 0))))))
+(define port-depth 8)
+
+(define port-curve (list (format "~s,~s" mid-right (- top corner-radius))
+                         (format "~s,~s" (+ mid-x corner-radius)
+                                 (+ top port-depth
+                                    (- corner-radius)))
+                         (format "~s,~s" (- mid-x corner-radius)
+                                 (+ top port-depth
+                                    (- corner-radius)))
+                         (format "~s,~s" mid-left (- top corner-radius))))
+
+(define (outline with-port?)
+  `(polygon ((points ,(string-join (let ((noport (outline-points '() 90 0)))
+                                     (if with-port?
+                                         (append noport port-curve)
+                                         noport)))))))
 
 ;;; switches
 
-(define column-offsets '(8 5 0 6 11 52))
+(define column-offsets `(8 5 0 6 11 ,(+ 8 switch-spacing switch-spacing)))
 
 (define (switch row col)
   (let* ([x (* (+ 1 col) switch-spacing)]
@@ -104,8 +121,8 @@
 
 (define hand-height (+ (* switch-spacing rows) (- switch-spacing switch-height)
                        (list-ref column-offsets 0)))
-(define switch-x-offset -6)
-(define switch-y-offset (- bottom hand-height))
+(define switch-x-offset -6.5)
+(define switch-y-offset (- bottom hand-height -3.5))
 
 (define switches
   `(g ((transform ,(format "translate(~s, ~s) rotate(~s, ~s, ~s)"
@@ -121,25 +138,46 @@
   `(g ((transform ,(format "translate(~s,~s) scale(-1, 1)" width 0)))
       ,switches))
 
-(define doc
+(define logo-doc (call-with-input-file "logo-fragment.svg" read-xml))
+
+(define pcb-doc (call-with-input-file "pcb-fragment.svg" read-xml))
+
+(define (layer plate)
   (document (prolog '() false '())
             (xexpr->xml
              `(svg ((xmlns:svg "http://www.w3.org/2000/svg")
                     (height ,(number->string (* height scale)))
                     (width ,(number->string (* width scale))))
+                   ,@(if (eq? plate 'switch)
+                         `((g ((transform "translate(436, 115)")
+                               (stroke "red"))
+                              ,(xml->xexpr (document-element logo-doc))))
+                         '())
+                   ,@(if (eq? plate 'spacer)
+                         (list (xml->xexpr (document-element pcb-doc)))
+                         (list))
                    (g ((transform ,(format "scale(~s, ~s)" scale scale))
                        (stroke-width "1")
                        (stroke "black")
                        (fill-opacity "0"))
                       ,screws
-                      ,outline
-                      ,switches
-                      ,switches-right
-                      )))
+                      ,(outline (not (eq? plate 'switch)))
+                      ,@(if (eq? plate 'switch)
+                            (list switches switches-right)
+                            (list)))))
             '()))
 
-(call-with-output-file "case-mk4.svg"
-  (lambda (out)
-    (display "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" out)
-    (display-xml doc out))
-  #:exists 'replace)
+;; to laser cut these, you have to open them in inkscape, then save,
+;; and then upload; for some reason the glowforge crashes if you try to cut
+;; them directly.
+
+(define (write-out-layer layer-name)
+  (call-with-output-file (format "case2-~a.svg" (symbol->string layer-name))
+    (lambda (out)
+      (display "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" out)
+      (display-xml (layer layer-name) out))
+    #:exists 'replace))
+
+(write-out-layer 'switch)
+(write-out-layer 'bottom)
+(write-out-layer 'spacer)
