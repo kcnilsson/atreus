@@ -1,5 +1,5 @@
 #lang racket
-;; Atreus 2 case design
+;; Atreus 2 deck design
 ;; Copyright © 2019 Phil Hagelberg and contributors
 ;; released under the GPLv3 or later
 
@@ -12,7 +12,7 @@
 ;; glowforge uses 96 dpi, 25.4 mm in an inch
 (define scale (/ 96 25.4))
 (define width 260)
-(define height 132)
+(define height 232)
 
 
 (define cols 6) ; per hand
@@ -46,20 +46,27 @@
 (define mid-left (- mid-x mid-offset))
 (define mid-right (+ mid-x mid-offset))
 
-(define hull-coords (list (list right-top top)
+(define upper-height 75)
+(define left-upper-top (+ left-top (* upper-height (sin angle))))
+(define right-upper-top (- right-top (* upper-height (sin angle))))
+(define upper-top (- top (* upper-height (cos angle))))
+
+(define hull-coords (list (list right-upper-top upper-top)
+                          (list right-top top)
                           (list right bottom)
                           (list mid-right mid-bottom)
                           (list mid-left mid-bottom)
                           (list left bottom)
-                          (list left-top top)))
+                          (list left-top top)
+                          (list left-upper-top upper-top)))
 
 ;;; screws
 (define screws
-  `(g () ,@(for/list ([s (append (take hull-coords 2)
+  `(g () ,@(for/list ([s (append (take hull-coords 3)
                                  ;; the bottom middle has only one screw but
                                  ;; two hull positions
                                  (list (list (/ width 2) mid-bottom))
-                                 (drop hull-coords 4))])
+                                 (drop hull-coords 5))])
              `(circle ((r ,(number->string screw-radius))
                        (cx ,(number->string (first s)))
                        (cy ,(number->string (second s))))))))
@@ -86,7 +93,8 @@
              [y (- sy (* (sin (degrees->radians theta)) corner-radius))]
              [coords (cons (format "~s,~s" x y) coords)])
         (if (to-next-screw? theta current-screw)
-            (outline-points coords theta (add1 current-screw))
+            (begin (printf "~a~n" current)
+                   (outline-points coords theta (add1 current-screw)))
             (outline-points coords (sub1 theta) current-screw)))
       coords))
 
@@ -149,14 +157,16 @@
                     (height ,(number->string (* height scale)))
                     (width ,(number->string (* width scale))))
                    ,@(if (eq? plate 'switch)
-                         `((g ((transform "translate(436, 115)")
+                         `((g ((transform ,(format "translate(436, ~s)"
+                                                   (+ (* scale upper-height) 115)))
                                (stroke "red"))
                               ,(xml->xexpr (document-element logo-doc))))
                          '())
                    ,@(if (eq? plate 'spacer)
                          (list (xml->xexpr (document-element pcb-doc)))
                          (list))
-                   (g ((transform ,(format "scale(~s, ~s)" scale scale))
+                   (g ((transform ,(format "scale(~s, ~s) translate(0, ~s)"
+                                           scale scale upper-height))
                        (stroke-width "1")
                        (stroke "black")
                        (fill-opacity "0"))
@@ -172,15 +182,15 @@
 ;; them directly.
 
 (define (write-out-layer layer-name)
-  (call-with-output-file (format "case2-~a.svg" (symbol->string layer-name))
+  (call-with-output-file (format "deck-~a.svg" (symbol->string layer-name))
     (lambda (out)
       (display "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" out)
       (display-xml (layer layer-name) out))
     #:exists 'replace))
 
 ;; live-reload with:
-;; qiv --watch case2-switch.svg
+;; qiv --watch deck-switch.svg
 
 (write-out-layer 'switch)
-(write-out-layer 'bottom)
-(write-out-layer 'spacer)
+;; (write-out-layer 'bottom)
+;; (write-out-layer 'spacer)
