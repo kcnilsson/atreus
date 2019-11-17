@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <g id="g50">
+      <circle
+         transform="scale(-1)"
+         r="1.4013965"
+         cy="-292.54999"
+         cx="-123.93"
+         id="path847"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.09720702;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <circle
+         transform="scale(-1)"
+         r="1.4013966"
+         cy="-222.54997"
+         cx="-123.93"
+         id="path847-4"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.09720702;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <circle
+         transform="scale(-1)"
+         r="1.4013966"
+         cy="-292.54999"
+         cx="-5.530683"
+         id="path847-1"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.09720702;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <!-- this hole already exists, but we can use it for alignment -->
+      <!-- <circle -->
+      <!--    transform="scale(-1)" -->
+      <!--    r="1.4013966" -->
+      <!--    cy="-222.54997" -->
+      <!--    cx="-5.530683" -->
+      <!--    id="path847-5" -->
+      <!--    style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.09720702;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /> -->
+      <rect
+         transform="scale(-1)"
+         y="-288.11554"
+         x="-15.224185"
+         height="17.211929"
+         width="28.366371"
+         id="rect876"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.24762903;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-295.0882"
+         x="-86.282448"
+         height="5.3371143"
+         width="51.207447"
+         id="rect878"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-224.03889"
+         x="-94.911888"
+         height="5.3108878"
+         width="59.823772"
+         id="rect880"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1762262;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-266.625"
+         x="-131.74718"
+         height="18.607777"
+         width="22.358181"
+         id="rect882"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-286.625"
+         x="-144.74718"
+         height="16.607777"
+         width="28.358181"
+         id="rect882"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-233.26974"
+         x="-46.397751"
+         height="5.8755026"
+         width="6.3085027"
+         id="rect884"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.17849734;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-243.925"
+         x="-4.819654"
+         height="8.9432726"
+         width="3.0291729"
+         id="rect886"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-295.93082"
+         x="-28.770374"
+         height="5.86167"
+         width="18.475203"
+         id="rect888"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.13832989;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-269.04993"
+         x="-27.826923"
+         height="5.0344701"
+         width="17.84285"
+         id="rect890"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.16415074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         transform="scale(-1)"
+         y="-245.03999"
+         x="-24.834372"
+         height="5.0486212"
+         width="14.857372"
+         id="rect890-4"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+
+

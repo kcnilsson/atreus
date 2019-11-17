@@ -3,17 +3,12 @@
 ;; Copyright © 2019 Phil Hagelberg and contributors
 ;; released under the GPLv3 or later
 
-;; TODO:
-;; * port notch on bottom plate and spacer
-;; * top layer
-
 (require xml)
 
 ;; glowforge uses 96 dpi, 25.4 mm in an inch
 (define scale (/ 96 25.4))
 (define width 260)
 (define height 232)
-
 
 (define cols 6) ; per hand
 (define rows 4)
@@ -24,7 +19,7 @@
 (define alps-switch-height 13.087)
 (define cherry-switch-width 13.62)
 (define cherry-switch-height 13.72)
-(define cherry? true)
+(define cherry? false)
 (define switch-height (if cherry? cherry-switch-height alps-switch-height))
 (define switch-width (if cherry? cherry-switch-width alps-switch-width))
 
@@ -46,7 +41,7 @@
 (define mid-left (- mid-x mid-offset))
 (define mid-right (+ mid-x mid-offset))
 
-(define upper-height 75)
+(define upper-height 80)
 (define left-upper-top (+ left-top (* upper-height (sin angle))))
 (define right-upper-top (- right-top (* upper-height (sin angle))))
 (define upper-top (- top (* upper-height (cos angle))))
@@ -93,27 +88,30 @@
              [y (- sy (* (sin (degrees->radians theta)) corner-radius))]
              [coords (cons (format "~s,~s" x y) coords)])
         (if (to-next-screw? theta current-screw)
-            (begin (printf "~a~n" current)
-                   (outline-points coords theta (add1 current-screw)))
+            (outline-points coords theta (add1 current-screw))
             (outline-points coords (sub1 theta) current-screw)))
       coords))
 
-(define port-depth 8)
+(define (outline)
+  `(polygon ((points ,(string-join (outline-points '() 90 0))))))
 
-(define port-curve (list (format "~s,~s" mid-right (- top corner-radius))
-                         (format "~s,~s" (+ mid-x corner-radius)
-                                 (+ top port-depth
-                                    (- corner-radius)))
-                         (format "~s,~s" (- mid-x corner-radius)
-                                 (+ top port-depth
-                                    (- corner-radius)))
-                         (format "~s,~s" mid-left (- top corner-radius))))
+;;; board
 
-(define (outline with-port?)
-  `(polygon ((points ,(string-join (let ((noport (outline-points '() 90 0)))
-                                     (if with-port?
-                                         (append noport port-curve)
-                                         noport)))))))
+(define board-doc (call-with-input-file "pine64-fragment.svg" read-xml))
+
+;; screen viewable: 116x68
+
+(define screen-slots
+  (let ((x 170)
+        (y "-65"))
+    (list `(rect ((x ,(format "~s" x))
+                  (y ,y)
+                  (height "20")
+                  (width "2.55")))
+          `(rect ((x ,(format "~s" (+ x 35.6)))
+                  (y ,y)
+                  (height "20")
+                  (width "2.55"))))))
 
 ;;; switches
 
@@ -148,8 +146,6 @@
 
 (define logo-doc (call-with-input-file "logo-fragment.svg" read-xml))
 
-(define pcb-doc (call-with-input-file "pcb-fragment.svg" read-xml))
-
 (define (layer plate)
   (document (prolog '() false '())
             (xexpr->xml
@@ -162,16 +158,17 @@
                                (stroke "red"))
                               ,(xml->xexpr (document-element logo-doc))))
                          '())
-                   ,@(if (eq? plate 'spacer)
-                         (list (xml->xexpr (document-element pcb-doc)))
-                         (list))
+                   (g ((transform ,(format "translate(100.14, -765) scale(~s, ~s)"
+                                           scale scale)))
+                      ,(xml->xexpr (document-element board-doc)))
                    (g ((transform ,(format "scale(~s, ~s) translate(0, ~s)"
-                                           scale scale upper-height))
+                                           scale scale (- upper-height 1.4)))
                        (stroke-width "1")
                        (stroke "black")
                        (fill-opacity "0"))
                       ,screws
-                      ,(outline (not (eq? plate 'switch)))
+                      ,@screen-slots
+                      ,(outline)
                       ,@(if (eq? plate 'switch)
                             (list switches switches-right)
                             (list)))))
@@ -192,5 +189,4 @@
 ;; qiv --watch deck-switch.svg
 
 (write-out-layer 'switch)
-;; (write-out-layer 'bottom)
-;; (write-out-layer 'spacer)
+(write-out-layer 'bottom)
