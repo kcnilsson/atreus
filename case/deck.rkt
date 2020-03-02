@@ -61,7 +61,7 @@
                                  ;; the bottom middle has only one screw but
                                  ;; two hull positions
                                  (list (list (/ width 2) mid-bottom))
-                                 (drop hull-coords 5))])
+                                 (take (drop hull-coords 5) 2))])
              `(circle ((r ,(number->string screw-radius))
                        (cx ,(number->string (first s)))
                        (cy ,(number->string (second s))))))))
@@ -102,7 +102,7 @@
 ;; screen viewable: 116x68
 
 (define screen-slots
-  (let ((x 170)
+  (let ((x 180)
         (y "-65"))
     (list `(rect ((x ,(format "~s" x))
                   (y ,y)
@@ -188,5 +188,9 @@
 ;; live-reload with:
 ;; qiv --watch deck-switch.svg
 
+;; TODO: headphone jack is missing
+;; TODO: check HDMI width
 (write-out-layer 'switch)
+;; TODO: flip the bottom horizontally!
+;; TODO: remove heat sink cutout
 (write-out-layer 'bottom)

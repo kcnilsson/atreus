@@ -24,7 +24,7 @@
 (define alps-switch-height 13.087)
 (define cherry-switch-width 13.62)
 (define cherry-switch-height 13.72)
-(define cherry? true)
+(define cherry? false)
 (define switch-height (if cherry? cherry-switch-height alps-switch-height))
 (define switch-width (if cherry? cherry-switch-width alps-switch-width))
 

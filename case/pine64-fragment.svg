@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-    <g id="g50">
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+    <g
+       id="g5839">
       <circle
          transform="scale(-1)"
          r="1.4013965"
@@ -9,6 +12,8 @@
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.09720702;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <circle
          transform="scale(-1)"
+         inkscape:transform-center-y="-28.849266"
+         inkscape:transform-center-x="-0.72123166"
          r="1.4013966"
          cy="-222.54997"
          cx="-123.93"
@@ -21,14 +26,13 @@
          cx="-5.530683"
          id="path847-1"
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.09720702;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <!-- this hole already exists, but we can use it for alignment -->
-      <!-- <circle -->
-      <!--    transform="scale(-1)" -->
-      <!--    r="1.4013966" -->
-      <!--    cy="-222.54997" -->
-      <!--    cx="-5.530683" -->
-      <!--    id="path847-5" -->
-      <!--    style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.09720702;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /> -->
+      <circle
+         transform="scale(-1)"
+         r="1.4013966"
+         cy="-222.54997"
+         cx="-5.530683"
+         id="path847-5"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.09720702;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <rect
          transform="scale(-1)"
          y="-288.11554"
@@ -53,22 +57,11 @@
          width="59.823772"
          id="rect880"
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1762262;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <rect
-         transform="scale(-1)"
-         y="-266.625"
-         x="-131.74718"
-         height="18.607777"
-         width="22.358181"
+      <path
          id="rect882"
-         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <rect
-         transform="scale(-1)"
-         y="-286.625"
-         x="-144.74718"
-         height="16.607777"
-         width="28.358181"
-         id="rect882"
-         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         d="M 131.74718,266.625 H 109.389 v -18.60778 h 22.35818 z"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
       <rect
          transform="scale(-1)"
          y="-233.26974"
@@ -109,6 +102,32 @@
          width="14.857372"
          id="rect890-4"
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         y="248.45453"
+         x="69.154579"
+         height="21.290863"
+         width="13.090864"
+         id="rect4524"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.10913721;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         y="228.76283"
+         x="120.27613"
+         height="11.874357"
+         width="32.874359"
+         id="rect4572"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.12564273;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         y="244.12321"
+         x="-11.856783"
+         height="26.210566"
+         width="19.713566"
+         id="rect4608"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.28643477;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         y="270.05338"
+         x="116.05337"
+         height="16.893267"
+         width="29.893267"
+         id="rect5217"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.10673381;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
-
-
