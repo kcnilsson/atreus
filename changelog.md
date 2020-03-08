@@ -1,6 +1,30 @@
 # Change log
 
-## Deck I: 2018-7-28
+This is a listing of all changes and prototypes for the Atreus
+keyboard design. Changes to the
+[Atreus Deck](https://atreus.technomancy.us/marki) are elsewhere.
+
+## Keyboardio Atreus: 2020-03-17
+
+* Completely redesigned factory-produced case.
+* Metal switch plate.
+* USB C port.
+* Optionally labeled XDA keycaps.
+* 15mm smaller in two dimensions.
+
+## NX-04: 2019-05-25
+
+This was the first prototype to incorporate the redesigned PCB by
+Jesse Vincent.
+
+* 2 additional keys.
+* wooden case with 4 layers instead of 5.
+* detachable USB cable.
+* swappable Cherry MX switches.
+* surface-mount controller and diodes.
+* Kaleidoscope is the default firmware.
+
+## Mark 3.8: 2018-7-28
 
 * QMK is the default firmware for all boards now.
 
