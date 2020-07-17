@@ -1,5 +1,7 @@
 * Atreus Keyboard
 
+This repository is [[https://gitlab.com/technomancy/atreus][moved to GitLab]].
+
 The Atreus is a mechanical keyboard designed primarily to match the
 shape of human hands and to be as portable as possible. The case
 measures 26x12cm and lacks even a number row, relying heavily upon the
