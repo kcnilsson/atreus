@@ -166,12 +166,11 @@
          [Θ (atan (/ y x))]
          [Θ′ (- Θ (degrees->radians rotation))]
          [x′ (+ (if left? x-offset 5) (* hypotenuse (cos Θ′)))]
-         [y′ (+ (if left? y-offset (+ y-offset 42.885)) (* hypotenuse (sin Θ′)))]
+         [y′ (+  (if left? y-offset (+ y-offset 49.489731)) (* hypotenuse (sin Θ′)))];42.885 original offset value for right side
          [label (format "SW~a:~a" col row)]
          [diode (+ row (* col 4))]
          ;; if we try to number nets linearly, kicad segfaults; woo!
          ;; so we re-use the nets we skipped with the missing col 5/6 diodes
-         ;need to figure out how to change this below...
          [diode (cond [(> diode 44) (- diode 20)]
                       [(> diode 41) (- diode 21)]
                       [true diode])]
@@ -194,7 +193,7 @@
          [Θ′ (- Θ (degrees->radians rotation))]
          [x′ (+ (if left? x-offset 5) (* hypotenuse (cos Θ′))
                 (if left? 9 -9))]
-         [y′ (+ (if left? y-offset (+ y-offset 42.885))
+         [y′ (+ (if left? y-offset (+ y-offset 49.489731));42.885 original offset value for right side
                 (* hypotenuse (sin Θ′)))]
          [label (format "D~a:~a" col row)]
          [diode (+ row (* col 4))]
@@ -216,18 +215,16 @@
   (for/list ([col (in-range cols)]
              #:when true
              [row (if (or (= 6 col) (= 7 col))
-                      '(0) (in-range rows))])
+                      '(1) (in-range rows))]);changed 0 to 1 to lower the middle "thumb" switches
     (list (switch row col) (diode row col))))
 
 (define edge-cuts
-  (for/list [(s '([31 22] [84 22] [127 30]
-                          [129 49] [129 75] [139 75]
-                  [139 49] [141 30] [185 22]
-                  [237 22] [250 95] [161 121] [107 121] [18 95]))
-             (e '([84 22] [127 30]
-                          [129 49] [129 75] [139 75] [139 49]
-                  [141 30] [185 22]
-                  [237 22] [250 95] [161 121] [107 121] [18 95] [31 22]))]
+  (for/list [(s '([30.23 23.11] [103.89 23.11] [152.4 38.1]
+                          [201.55 23.11] [275.21 23.11] [291.29 114.55]
+                  [194.14 135.04] [111.38 135.04] [14.22 114.55]))
+             (e '([103.89 23.11] [152.4 38.1] [201.55 23.11]
+                          [275.21 23.11] [291.29 114.55] [194.14 135.04]
+                  [111.38 135.04] [14.22 114.55] [30.23 23.11]))]
     `(gr_line (start ,@s) (end ,@e) (angle 90) (layer Edge.Cuts) (width 0.3))))
 
 (define board
@@ -247,8 +244,8 @@
       (display "\n" op)
       (for ([f board])
         (pretty-print f op 1))
-      (display (call-with-input-file "traces.rktd"
-                 (curry read-string 999999)) op)
+      ;(display (call-with-input-file "traces.rktd"
+                 ;(curry read-string 999999)) op)
       (display ")" op))))
 
 ;; TODOs:
